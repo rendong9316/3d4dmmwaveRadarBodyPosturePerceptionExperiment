@@ -11,7 +11,7 @@ import matplotlib
 matplotlib.rcParams['font.sans-serif'] = ['SimHei', 'Microsoft YaHei']
 matplotlib.rcParams['axes.unicode_minus'] = False
 
-BASE = r"D:\downlowd_cloud\方向2-雷达数据demo\3D"
+BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '3D')
 
 
 def parse_logfile(logfile_path):

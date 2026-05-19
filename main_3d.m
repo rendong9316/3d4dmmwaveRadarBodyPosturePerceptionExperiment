@@ -1,10 +1,12 @@
 %% 3D雷达数据处理主脚本 — 基础任务完整流水线
 %% DCA1000 + IWR6843 (60GHz)
-%% 读取 → 杂波抑制 → Range-FFT → Doppler-FFT → CFAR → 角度FFT → 3D点云
+%% 读取 → Range-FFT → Doppler-FFT → 零速通道置零 → CFAR → 角度FFT → 3D点云
 clear; clc; close all;
 
-BASE = 'D:\downlowd_cloud\方向2-雷达数据demo\3D';
-addpath(fullfile(BASE, '..\3D雷达信号数据读取参考代码'));
+% 自动获取脚本所在目录，所有路径均以此为基准（无需手动修改）
+script_dir = fileparts(mfilename('fullpath'));
+BASE = fullfile(script_dir, '3D');
+addpath(fullfile(script_dir, '3D雷达信号数据读取参考代码'));
 
 % ===== 1. 解析雷达参数 =====
 logfile = fullfile(BASE, 'stand_0.8m', '1_LogFile.txt');
@@ -63,9 +65,8 @@ for s = 1:4
     t_start = tic;
 
     for f_idx = 1:n_frames
-        % --- 步骤1: 取单帧 + 静态杂波抑制 ---
+        % --- 步骤1: 取单帧 ---
         frame = squeeze(adcData(:, :, :, f_idx));  % [256, 4, 245]
-        frame = staticClutterSuppression(frame);
 
         % --- 步骤2: 距离维FFT ---
         range_data = rangeFFT(frame);  % [256, 4, 245] complex
@@ -73,15 +74,19 @@ for s = 1:4
         % --- 步骤3: 多普勒维FFT ---
         rd_data = dopplerFFT(range_data);  % [256, 4, 245] complex (fftshifted)
 
-        % --- 步骤4: 非相干合并RX → 功率谱(dB) ---
+        % --- 步骤4: 静态杂波抑制（零速通道置零）---
+        % 在Doppler FFT之后，将零多普勒bin置零，去除静止目标
+        rd_data = staticClutterSuppression(rd_data);
+
+        % --- 步骤5: 非相干合并RX → 功率谱 ---
         % 4通道功率求和（非相干积累），用于CFAR检测
         rd_power = squeeze(sum(abs(rd_data).^2, 2));  % [256, 245] 线性功率
         rd_db = 10 * log10(rd_power + 1e-10);          % dB
 
-        % --- 步骤5: 二维CA-CFAR检测 ---
+        % --- 步骤6: 二维CA-CFAR检测 ---
         detections = cfar2D(rd_power, guard_r, guard_d, train_r, train_d, thresh_factor);
 
-        % --- 步骤6: 角度FFT + 点云生成 ---
+        % --- 步骤7: 角度FFT + 点云生成 ---
         pts = generatePointCloud(detections, rd_data, para, n_angle_fft);
 
         % 存储
