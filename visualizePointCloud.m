@@ -20,7 +20,7 @@ function visualizePointCloud(all_rd, all_points, all_detections, scenarios_cn, p
     vel_axis = linspace(-v_max, v_max, n_doppler);
 
     % ===== 图1: RD谱 + CFAR检测叠加 =====
-    figure('Name', 'Range-Doppler谱 + CFAR检测', 'Position', [50, 300, 1200, 800]);
+    figure('Name', 'Range-Doppler谱 + CFAR检测', 'Position', [50, 50, 1200, 700]);
     for s = 1:4
         subplot(2, 2, s);
         rd_db = all_rd{s};
@@ -50,7 +50,7 @@ function visualizePointCloud(all_rd, all_points, all_detections, scenarios_cn, p
     sgtitle('Range-Doppler谱 + CFAR目标检测（中间帧，红色叉=检测点）');
 
     % ===== 图2: 3D点云散点图 =====
-    figure('Name', '3D点云', 'Position', [100, 50, 1200, 800]);
+    figure('Name', '3D点云', 'Position', [100, 50, 1200, 700]);
     for s = 1:4
         subplot(2, 2, s);
         pts_cell = all_points{s};
@@ -87,7 +87,7 @@ function visualizePointCloud(all_rd, all_points, all_detections, scenarios_cn, p
     sgtitle('3D点云（中间帧，颜色=径向速度）');
 
     % ===== 图3: 点云数量随帧变化 =====
-    figure('Name', '点云数量随帧变化', 'Position', [150, 100, 800, 500]);
+    figure('Name', '点云数量随帧变化', 'Position', [150, 100, 800, 700]);
     colors = {'k', 'b', 'g', 'r'};
     hold on;
     for s = 1:4
