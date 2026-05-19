@@ -1,0 +1,1049 @@
+{
+  "configGenerator": {
+    "createdBy": "mmWaveStudio",
+    "createdOn": "2026-05-06T16:30:11.6475253+08:00",
+    "isConfigIntermediate": 1
+  },
+  "currentVersion": {
+    "jsonCfgVersion": {
+      "major": 0,
+      "minor": 4,
+      "patch": 0
+    },
+    "DFPVersion": {
+      "major": 2,
+      "minor": 2,
+      "patch": 0
+    },
+    "SDKVersion": {
+      "major": 3,
+      "minor": 3,
+      "patch": 0
+    },
+    "mmwavelinkVersion": {
+      "major": 2,
+      "minor": 2,
+      "patch": 0
+    }
+  },
+  "lastBackwardCompatibleVersion": {
+    "DFPVersion": {
+      "major": 2,
+      "minor": 1,
+      "patch": 0
+    },
+    "SDKVersion": {
+      "major": 3,
+      "minor": 0,
+      "patch": 0
+    },
+    "mmwavelinkVersion": {
+      "major": 2,
+      "minor": 1,
+      "patch": 0
+    }
+  },
+  "regulatoryRestrictions": {
+    "frequencyRangeBegin_GHz": 77,
+    "frequencyRangeEnd_GHz": 81,
+    "maxBandwidthAllowed_MHz": 4000,
+    "maxTransmitPowerAllowed_dBm": 12
+  },
+  "systemConfig": {
+    "summary": "This is a comments field not passed to device",
+    "sceneParameters": {
+      "ambientTemperature_degC": 20,
+      "maxDetectableRange_m": 10,
+      "rangeResolution_cm": 5,
+      "maxVelocity_kmph": 26,
+      "velocityResolution_kmph": 2,
+      "measurementRate": 10,
+      "typicalDetectedObjectRCS": 1.0
+    }
+  },
+  "mmWaveDevices": [
+    {
+      "mmWaveDeviceId": 0,
+      "rfConfig": {
+        "waveformType": "legacyFrameChirp",
+        "MIMOScheme": "TDM",
+        "rlCalibrationDataFile": "",
+        "rlChanCfg_t": {
+          "rxChannelEn": "0xF",
+          "txChannelEn": "0x7",
+          "cascading": 1,
+          "cascadingPinoutCfg": "0x0"
+        },
+        "rlAdcOutCfg_t": {
+          "fmt": {
+            "b2AdcBits": 2,
+            "b8FullScaleReducFctr": 0,
+            "b2AdcOutFmt": 1
+          }
+        },
+        "rlLowPowerModeCfg_t": {
+          "lpAdcMode": 0
+        },
+        "rlProfiles": [
+          {
+            "rlProfileCfg_t": {
+              "profileId": 0,
+              "pfVcoSelect": "0x0",
+              "pfCalLutUpdate": "0x0",
+              "startFreqConst_GHz": 77.0,
+              "idleTimeConst_usec": 6.0,
+              "adcStartTimeConst_usec": 6.0,
+              "rampEndTime_usec": 40.0,
+              "txOutPowerBackoffCode": "0x0",
+              "txPhaseShifter": "0x0",
+              "freqSlopeConst_MHz_usec": 78.986000061035156,
+              "txStartTime_usec": 0.0,
+              "numAdcSamples": 256,
+              "digOutSampleRate": 8000.0,
+              "hpfCornerFreq1": 0,
+              "hpfCornerFreq2": 0,
+              "rxGain_dB": "0x30"
+            }
+          }
+        ],
+        "rlChirps": [
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 0,
+              "chirpEndIdx": 0,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 1,
+              "chirpEndIdx": 1,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 2,
+              "chirpEndIdx": 2,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 3,
+              "chirpEndIdx": 3,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 4,
+              "chirpEndIdx": 4,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 5,
+              "chirpEndIdx": 5,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 6,
+              "chirpEndIdx": 6,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 7,
+              "chirpEndIdx": 7,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 8,
+              "chirpEndIdx": 8,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 9,
+              "chirpEndIdx": 9,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x4"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 10,
+              "chirpEndIdx": 10,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x2"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 11,
+              "chirpEndIdx": 11,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x1"
+            }
+          }
+        ],
+        "rlRfInitCalConf_t": {
+          "calibEnMask": "0x1FF0"
+        },
+        "rlFrameCfg_t": {
+          "chirpEndIdx": 11,
+          "chirpStartIdx": 0,
+          "numLoops": 64,
+          "numFrames": 80,
+          "framePeriodicity_msec": 60.0,
+          "triggerSelect": 1,
+          "frameTriggerDelay": 0.0
+        },
+        "rlBpmChirps": [],
+        "rlRfMiscConf_t": {
+          "miscCtl": "1"
+        },
+        "rlRfPhaseShiftCfgs": [],
+        "rlRfProgFiltConfs": [],
+        "rlRfLdoBypassCfg_t": {
+          "ldoBypassEnable": 3,
+          "supplyMonIrDrop": 0,
+          "ioSupplyIndicator": 0
+        },
+        "rlLoopbackBursts": [],
+        "rlDynChirpCfgs": [],
+        "rlDynPerChirpPhShftCfgs": []
+      },
+      "rawDataCaptureConfig": {
+        "rlDevDataFmtCfg_t": {
+          "iqSwapSel": 0,
+          "chInterleave": 0
+        },
+        "rlDevDataPathCfg_t": {
+          "intfSel": 0,
+          "transferFmtPkt0": "0x1",
+          "transferFmtPkt1": "0x0",
+          "cqConfig": 0,
+          "cq0TransSize": 0,
+          "cq1TransSize": 0,
+          "cq2TransSize": 0
+        },
+        "rlDevDataPathClkCfg_t": {
+          "laneClkCfg": 1,
+          "dataRate_Mbps": 600
+        },
+        "rlDevCsi2Cfg_t": {
+          "lanePosPolSel": "0x35421",
+          "lineStartEndDis": 0
+        }
+      },
+      "monitoringConfig": {
+      }
+    },
+    {
+      "mmWaveDeviceId": 1,
+      "rfConfig": {
+        "waveformType": "legacyFrameChirp",
+        "MIMOScheme": "TDM",
+        "rlCalibrationDataFile": "",
+        "rlChanCfg_t": {
+          "rxChannelEn": "0xF",
+          "txChannelEn": "0x7",
+          "cascading": 2,
+          "cascadingPinoutCfg": "0x0"
+        },
+        "rlAdcOutCfg_t": {
+          "fmt": {
+            "b2AdcBits": 2,
+            "b8FullScaleReducFctr": 0,
+            "b2AdcOutFmt": 1
+          }
+        },
+        "rlLowPowerModeCfg_t": {
+          "lpAdcMode": 0
+        },
+        "rlProfiles": [
+          {
+            "rlProfileCfg_t": {
+              "profileId": 0,
+              "pfVcoSelect": "0x0",
+              "pfCalLutUpdate": "0x0",
+              "startFreqConst_GHz": 77.0,
+              "idleTimeConst_usec": 6.0,
+              "adcStartTimeConst_usec": 6.0,
+              "rampEndTime_usec": 40.0,
+              "txOutPowerBackoffCode": "0x0",
+              "txPhaseShifter": "0x0",
+              "freqSlopeConst_MHz_usec": 78.986000061035156,
+              "txStartTime_usec": 0.0,
+              "numAdcSamples": 256,
+              "digOutSampleRate": 8000.0,
+              "hpfCornerFreq1": 0,
+              "hpfCornerFreq2": 0,
+              "rxGain_dB": "0x30"
+            }
+          }
+        ],
+        "rlChirps": [
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 0,
+              "chirpEndIdx": 0,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 1,
+              "chirpEndIdx": 1,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 2,
+              "chirpEndIdx": 2,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 3,
+              "chirpEndIdx": 3,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 4,
+              "chirpEndIdx": 4,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 5,
+              "chirpEndIdx": 5,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 6,
+              "chirpEndIdx": 6,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x4"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 7,
+              "chirpEndIdx": 7,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x2"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 8,
+              "chirpEndIdx": 8,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x1"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 9,
+              "chirpEndIdx": 9,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 10,
+              "chirpEndIdx": 10,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 11,
+              "chirpEndIdx": 11,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          }
+        ],
+        "rlRfInitCalConf_t": {
+          "calibEnMask": "0x1FF0"
+        },
+        "rlFrameCfg_t": {
+          "chirpEndIdx": 11,
+          "chirpStartIdx": 0,
+          "numLoops": 64,
+          "numFrames": 80,
+          "framePeriodicity_msec": 60.0,
+          "triggerSelect": 2,
+          "frameTriggerDelay": 0.0
+        },
+        "rlBpmChirps": [],
+        "rlRfMiscConf_t": {
+          "miscCtl": "1"
+        },
+        "rlRfPhaseShiftCfgs": [],
+        "rlRfProgFiltConfs": [],
+        "rlRfLdoBypassCfg_t": {
+          "ldoBypassEnable": 3,
+          "supplyMonIrDrop": 0,
+          "ioSupplyIndicator": 0
+        },
+        "rlLoopbackBursts": [],
+        "rlDynChirpCfgs": [],
+        "rlDynPerChirpPhShftCfgs": []
+      },
+      "rawDataCaptureConfig": {
+        "rlDevDataFmtCfg_t": {
+          "iqSwapSel": 0,
+          "chInterleave": 0
+        },
+        "rlDevDataPathCfg_t": {
+          "intfSel": 0,
+          "transferFmtPkt0": "0x1",
+          "transferFmtPkt1": "0x0",
+          "cqConfig": 0,
+          "cq0TransSize": 0,
+          "cq1TransSize": 0,
+          "cq2TransSize": 0
+        },
+        "rlDevDataPathClkCfg_t": {
+          "laneClkCfg": 1,
+          "dataRate_Mbps": 600
+        },
+        "rlDevCsi2Cfg_t": {
+          "lanePosPolSel": "0x35421",
+          "lineStartEndDis": 0
+        }
+      },
+      "monitoringConfig": {
+      }
+    },
+    {
+      "mmWaveDeviceId": 2,
+      "rfConfig": {
+        "waveformType": "legacyFrameChirp",
+        "MIMOScheme": "TDM",
+        "rlCalibrationDataFile": "",
+        "rlChanCfg_t": {
+          "rxChannelEn": "0xF",
+          "txChannelEn": "0x7",
+          "cascading": 2,
+          "cascadingPinoutCfg": "0x0"
+        },
+        "rlAdcOutCfg_t": {
+          "fmt": {
+            "b2AdcBits": 2,
+            "b8FullScaleReducFctr": 0,
+            "b2AdcOutFmt": 1
+          }
+        },
+        "rlLowPowerModeCfg_t": {
+          "lpAdcMode": 0
+        },
+        "rlProfiles": [
+          {
+            "rlProfileCfg_t": {
+              "profileId": 0,
+              "pfVcoSelect": "0x0",
+              "pfCalLutUpdate": "0x0",
+              "startFreqConst_GHz": 77.0,
+              "idleTimeConst_usec": 6.0,
+              "adcStartTimeConst_usec": 6.0,
+              "rampEndTime_usec": 40.0,
+              "txOutPowerBackoffCode": "0x0",
+              "txPhaseShifter": "0x0",
+              "freqSlopeConst_MHz_usec": 78.986000061035156,
+              "txStartTime_usec": 0.0,
+              "numAdcSamples": 256,
+              "digOutSampleRate": 8000.0,
+              "hpfCornerFreq1": 0,
+              "hpfCornerFreq2": 0,
+              "rxGain_dB": "0x30"
+            }
+          }
+        ],
+        "rlChirps": [
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 0,
+              "chirpEndIdx": 0,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 1,
+              "chirpEndIdx": 1,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 2,
+              "chirpEndIdx": 2,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 3,
+              "chirpEndIdx": 3,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x4"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 4,
+              "chirpEndIdx": 4,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x2"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 5,
+              "chirpEndIdx": 5,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x1"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 6,
+              "chirpEndIdx": 6,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 7,
+              "chirpEndIdx": 7,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 8,
+              "chirpEndIdx": 8,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 9,
+              "chirpEndIdx": 9,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 10,
+              "chirpEndIdx": 10,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 11,
+              "chirpEndIdx": 11,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          }
+        ],
+        "rlRfInitCalConf_t": {
+          "calibEnMask": "0x1FF0"
+        },
+        "rlFrameCfg_t": {
+          "chirpEndIdx": 11,
+          "chirpStartIdx": 0,
+          "numLoops": 64,
+          "numFrames": 80,
+          "framePeriodicity_msec": 60.0,
+          "triggerSelect": 2,
+          "frameTriggerDelay": 0.0
+        },
+        "rlBpmChirps": [],
+        "rlRfMiscConf_t": {
+          "miscCtl": "1"
+        },
+        "rlRfPhaseShiftCfgs": [],
+        "rlRfProgFiltConfs": [],
+        "rlRfLdoBypassCfg_t": {
+          "ldoBypassEnable": 3,
+          "supplyMonIrDrop": 0,
+          "ioSupplyIndicator": 0
+        },
+        "rlLoopbackBursts": [],
+        "rlDynChirpCfgs": [],
+        "rlDynPerChirpPhShftCfgs": []
+      },
+      "rawDataCaptureConfig": {
+        "rlDevDataFmtCfg_t": {
+          "iqSwapSel": 0,
+          "chInterleave": 0
+        },
+        "rlDevDataPathCfg_t": {
+          "intfSel": 0,
+          "transferFmtPkt0": "0x1",
+          "transferFmtPkt1": "0x0",
+          "cqConfig": 0,
+          "cq0TransSize": 0,
+          "cq1TransSize": 0,
+          "cq2TransSize": 0
+        },
+        "rlDevDataPathClkCfg_t": {
+          "laneClkCfg": 1,
+          "dataRate_Mbps": 600
+        },
+        "rlDevCsi2Cfg_t": {
+          "lanePosPolSel": "0x35421",
+          "lineStartEndDis": 0
+        }
+      },
+      "monitoringConfig": {
+      }
+    },
+    {
+      "mmWaveDeviceId": 3,
+      "rfConfig": {
+        "waveformType": "legacyFrameChirp",
+        "MIMOScheme": "TDM",
+        "rlCalibrationDataFile": "",
+        "rlChanCfg_t": {
+          "rxChannelEn": "0xF",
+          "txChannelEn": "0x7",
+          "cascading": 2,
+          "cascadingPinoutCfg": "0x0"
+        },
+        "rlAdcOutCfg_t": {
+          "fmt": {
+            "b2AdcBits": 2,
+            "b8FullScaleReducFctr": 0,
+            "b2AdcOutFmt": 1
+          }
+        },
+        "rlLowPowerModeCfg_t": {
+          "lpAdcMode": 0
+        },
+        "rlProfiles": [
+          {
+            "rlProfileCfg_t": {
+              "profileId": 0,
+              "pfVcoSelect": "0x0",
+              "pfCalLutUpdate": "0x0",
+              "startFreqConst_GHz": 77.0,
+              "idleTimeConst_usec": 6.0,
+              "adcStartTimeConst_usec": 6.0,
+              "rampEndTime_usec": 40.0,
+              "txOutPowerBackoffCode": "0x0",
+              "txPhaseShifter": "0x0",
+              "freqSlopeConst_MHz_usec": 78.986000061035156,
+              "txStartTime_usec": 0.0,
+              "numAdcSamples": 256,
+              "digOutSampleRate": 8000.0,
+              "hpfCornerFreq1": 0,
+              "hpfCornerFreq2": 0,
+              "rxGain_dB": "0x30"
+            }
+          }
+        ],
+        "rlChirps": [
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 0,
+              "chirpEndIdx": 0,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x4"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 1,
+              "chirpEndIdx": 1,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x2"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 2,
+              "chirpEndIdx": 2,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x1"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 3,
+              "chirpEndIdx": 3,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 4,
+              "chirpEndIdx": 4,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 5,
+              "chirpEndIdx": 5,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 6,
+              "chirpEndIdx": 6,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 7,
+              "chirpEndIdx": 7,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 8,
+              "chirpEndIdx": 8,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 9,
+              "chirpEndIdx": 9,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 10,
+              "chirpEndIdx": 10,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          },
+          {
+            "rlChirpCfg_t": {
+              "chirpStartIdx": 11,
+              "chirpEndIdx": 11,
+              "profileId": 0,
+              "startFreqVar_MHz": 0.0,
+              "freqSlopeVar_KHz_usec": 0.0,
+              "idleTimeVar_usec": 0.0,
+              "adcStartTimeVar_usec": 0.0,
+              "txEnable": "0x0"
+            }
+          }
+        ],
+        "rlRfInitCalConf_t": {
+          "calibEnMask": "0x1FF0"
+        },
+        "rlFrameCfg_t": {
+          "chirpEndIdx": 11,
+          "chirpStartIdx": 0,
+          "numLoops": 64,
+          "numFrames": 80,
+          "framePeriodicity_msec": 60.0,
+          "triggerSelect": 2,
+          "frameTriggerDelay": 0.0
+        },
+        "rlBpmChirps": [],
+        "rlRfMiscConf_t": {
+          "miscCtl": "1"
+        },
+        "rlRfPhaseShiftCfgs": [],
+        "rlRfProgFiltConfs": [],
+        "rlRfLdoBypassCfg_t": {
+          "ldoBypassEnable": 3,
+          "supplyMonIrDrop": 0,
+          "ioSupplyIndicator": 0
+        },
+        "rlLoopbackBursts": [],
+        "rlDynChirpCfgs": [],
+        "rlDynPerChirpPhShftCfgs": []
+      },
+      "rawDataCaptureConfig": {
+        "rlDevDataFmtCfg_t": {
+          "iqSwapSel": 0,
+          "chInterleave": 0
+        },
+        "rlDevDataPathCfg_t": {
+          "intfSel": 0,
+          "transferFmtPkt0": "0x1",
+          "transferFmtPkt1": "0x0",
+          "cqConfig": 0,
+          "cq0TransSize": 0,
+          "cq1TransSize": 0,
+          "cq2TransSize": 0
+        },
+        "rlDevDataPathClkCfg_t": {
+          "laneClkCfg": 1,
+          "dataRate_Mbps": 600
+        },
+        "rlDevCsi2Cfg_t": {
+          "lanePosPolSel": "0x35421",
+          "lineStartEndDis": 0
+        }
+      },
+      "monitoringConfig": {
+      }
+    }
+  ],
+  "processingChainConfig": {
+    "detectionChain": {
+      "name": "TI_GenericChain",
+      "detectionLoss": 1,
+      "systemLoss": 1,
+      "implementationMargin": 2,
+      "detectionSNR": 12,
+      "theoreticalRxAntennaGain": 9,
+      "theoreticalTxAntennaGain": 9
+    }
+  }
+}
