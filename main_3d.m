@@ -1,7 +1,7 @@
 %% 3D雷达数据处理主脚本 — 基础任务完整流水线
 %% DCA1000 + IWR6843 (60GHz)
 %% 读取 → Range-FFT → Doppler-FFT → 零速通道置零 → CFAR → 角度FFT → 3D点云
-clc; close all;
+ clc; close all;
 
 % 自动获取脚本所在目录，所有路径均以此为基准（无需手动修改）
 script_dir = fileparts(mfilename('fullpath'));%获取脚本所在目录
@@ -39,7 +39,7 @@ scenarios_cn = {
 
 %逐个场景遍历
 for s = 1:1
-    s=2;
+    s=4;
     binfile = fullfile(BASE, scenarios{s}, '1.bin');
     fprintf('\n===== [场景 %d/4] %s =====\n', s, scenarios_cn{s});
     fprintf('  读取 %s ...\n', binfile);
@@ -77,6 +77,23 @@ for s = 1:1
     % 坐标轴
     range_axis = (0:255) * para.dr;
     doppler_axis = linspace(-v_max, v_max, 245);
+
+    %-----------二维CFAR检测————————————————————————————%
+Tr = 2;  Gr = 1;   % Range方向 训练/保护单元
+Td = 2;  Gd = 1;   % Doppler方向 训练/保护单元
+offset_dB =7;     % 阈值上调6dB
+cfar_result = rd_cfar_2d(rd_map, Tr, Td, Gr, Gd, offset_dB);
+
+% 可视化
+figure;
+imagesc(doppler_axis, range_axis, cfar_result);
+set(gca, 'YDir', 'normal');
+xlabel('速度 (m/s)');
+ylabel('距离 (m)');
+title('2D CFAR 检测结果');
+colormap gray;
+
+
 
 
     %% ================================================================
