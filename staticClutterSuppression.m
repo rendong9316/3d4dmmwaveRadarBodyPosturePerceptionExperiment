@@ -46,7 +46,7 @@ function rd_data = staticClutterSuppression(rd_data, method)
 %     rd_data = staticClutterSuppression(rd_data);
 
     if nargin < 2
-        method = 'zeroVel';
+        method = 'phasemean';
     end
 
     [n_range, n_rx, n_doppler] = size(rd_data);
