@@ -32,32 +32,36 @@ function para = read4DParam(jsonPath)
     para.numRXPerDevice = 4;                             % 每设备 RX 通道数
     para.totalRX = para.numDevices * para.numRXPerDevice; % 总 RX 通道 (16)
 
-    % 统计总 TX 数和每设备活跃 TX
-    txSet = [];  % 收集所有活跃的 TX 编号
-    deviceInfo = cell(para.numDevices, 1);
+    % ---- TDM-MIMO chirp->TX 映射表 ----
+    % 扫描所有设备的 chirp 配置，统计物理 TX 总数并建立映射
+    % txChirpMap(c, :) = [deviceID, txIndex]  (1-based chirp索引)
+    % 含义：第 c 个 chirp 由 deviceID 号设备的 txIndex 号 TX 天线发射
+    para.chirpsPerCycle = frame.chirpEndIdx - frame.chirpStartIdx + 1;  % 每 TDM 周期 Chirp 数 (12)
+    para.txChirpMap = zeros(para.chirpsPerCycle, 2);
+    totalTxCount = 0;
     for d = 1:para.numDevices
         chirps = cfg.mmWaveDevices(d).rfConfig.rlChirps;
-        activeTx = [];
         for c = 1:length(chirps)
             txEn = hex2dec(chirps(c).rlChirpCfg_t.txEnable);
             if txEn > 0
-                activeTx = [activeTx, txEn];
+                totalTxCount = totalTxCount + 1;
+                chirpIdx = chirps(c).rlChirpCfg_t.chirpStartIdx + 1;  % 0-based -> 1-based
+                txIdx = log2(txEn) + 1;  % 0x1->1(TX0), 0x2->2(TX1), 0x4->3(TX2)
+                para.txChirpMap(chirpIdx, :) = [d, txIdx];
             end
         end
-        deviceInfo{d}.activeTxMask = unique(activeTx);
-        txSet = [txSet, unique(activeTx)];
     end
-    para.totalTX = length(unique(txSet));                % 总物理 TX 天线数 (9)
-    para.chirpsPerCycle = frame.chirpEndIdx - frame.chirpStartIdx + 1;  % 每 TDM 周期 Chirp 数 (12)
+    para.totalTX = totalTxCount;  % 4设备 x 3TX = 12个物理发射天线
 
     % ---- MIMO 虚拟通道数 ----
-    para.virtualChannels = para.totalRX * para.totalTX;  % 192
+    para.virtualChannels = para.totalRX * para.totalTX;  % 192 (16x12)
 
     % ---- 派生参数 ----
     para.BandWidth = para.FrequencySlope * para.ADCSamples / para.Fs;
     para.dr = 3e8 / para.BandWidth / 2;                  % 距离分辨率
-    para.df = 1 / para.Chirptime / para.numDevices;      % 多普勒采样间隔（每个设备发射间隔）
-    para.dv = para.lambda * para.df / 2 / (para.numLoops * para.chirpsPerCycle);
+    % TDM周期: 每个TX每 chirpsPerCycle 个chirp才发射一次
+    para.df = 1 / (para.Chirptime * para.chirpsPerCycle); % 等效慢时间采样率 (每个TX的PRF)
+    para.dv = para.lambda * para.df / 2 / para.numLoops;  % 速度分辨率
 
     fprintf('  4D 级联雷达参数:\n');
     fprintf('    载频: %.0f GHz | 设备数: %d | TX: %d | RX: %d | 虚拟通道: %d\n', ...
@@ -66,4 +70,10 @@ function para = read4DParam(jsonPath)
             para.ADCSamples, para.chirpsPerCycle, para.numLoops, para.numFrames);
     fprintf('    带宽: %.1f MHz | 距离分辨率: %.2f cm\n', ...
             para.BandWidth/1e6, para.dr*100);
+
+    % 打印 TDM-MIMO 映射表
+    fprintf('    TDM-MIMO chirp映射 (chirp -> 设备.TX):\n');
+    for c = 1:para.chirpsPerCycle
+        fprintf('      chirp%2d -> Dev%d TX%d\n', c-1, para.txChirpMap(c,1), para.txChirpMap(c,2)-1);
+    end
 end

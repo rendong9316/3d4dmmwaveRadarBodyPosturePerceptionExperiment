@@ -1,201 +1,187 @@
-% 4D级联雷达数据处理 - 精简版
-clear; close all; script_dir = fileparts(mfilename('fullpath')); addpath(genpath(script_dir));
-% 读取雷达参数
+%% main_4d.m
+%% 4D级联雷达 四维时变谱图: RTM, DTM, ATM, ETM
+%% 方法: 帧内FFT + 全距离累积 + 时域背景归一化 (不用STFT)
+%% 从四张图可反推人体运动过程: 远近/快慢/左右/上下
+clear; close all;
+
+script_dir = fileparts(mfilename('fullpath'));
+addpath(genpath(script_dir));
+
 para = read4DParam(fullfile(script_dir, '..', '4D', 'CCconfig_json', 'CCconfig_json.mmwave.json'));
-% 选择第一个场景
 dataRoot = fullfile(script_dir, '..', 'datasets_4Dradar');
-scenes = dir(dataRoot); scenes = scenes([scenes.isdir] & ~ismember({scenes.name}, {'.', '..'}));
-scenario = scenes(1).name;
-% 读取Master原始数据 (第1帧)
-adcMaster = read4DRawData(fullfile(dataRoot, scenario, 'master_0000_data.bin'), para);
-[n_rx, n_range, ~, ~] = size(adcMaster);
-frame = squeeze(adcMaster(:,:,:,1));
-% Range FFT (汉宁窗)
-range_fft = fft(frame .* hanning(n_range).', [], 2);
-% TDM-MIMO解复用: 维度变为 [RX, Range, TX, Doppler]
-rd = reshape(range_fft, n_rx, n_range, para.chirpsPerCycle, para.numLoops);
-% 慢时间维去均值 (静态杂波抑制)
-rd = rd - mean(rd, 4);
-% Doppler FFT (汉宁窗 + fftshift)
-rd = fft(rd .* reshape(hanning(para.numLoops),1,1,1,para.numLoops), [], 4);
-rd = fftshift(rd, 4);
-% 零速通道抑制 (3-bin)
-zb = floor(para.numLoops/2) + 1;
-rd(:,:,:,zb-1:zb+1) = 0;
-% 非相干积累: RX求和, TX平均, 转dB
-rd_pwr = squeeze(mean(sum(abs(rd).^2, 1), 3));
-rd_map = 10*log10(rd_pwr + eps);
-% 坐标轴
-dr = para.dr;
-vmax = para.lambda / (4 * para.Chirptime * para.chirpsPerCycle);
-range_axis = (0:n_range-1) * dr;
-doppler_axis = linspace(-vmax, vmax, para.numLoops);
-% 仅显示0-80m，动态色标
-max_r = min(80, n_range);
-range_show = range_axis(1:max_r);
-rd_show = rd_map(1:max_r, :);
-rd_max_val = max(rd_show(:));
-% 绘制RD谱
-figure('Color','w'); imagesc(doppler_axis, range_show, rd_show); set(gca,'YDir','normal');
-xlabel('速度 (m/s)'); ylabel('距离 (m)'); title(sprintf('4D Radar RD Map — %s', scenario));
-colormap jet; colorbar; caxis([rd_max_val-35, rd_max_val]); grid on;
-fprintf('场景 %s RD谱完成\n', scenario);
+scenes = dir(dataRoot);
+scenes = scenes([scenes.isdir] & ~ismember({scenes.name}, {'.', '..'}));
+sceneType = 'walk';  sceneIdx = 1;  % bend/boxing/walk/run/jump/...
+targetScene = sprintf('CCdata_%s_%04d', sceneType, sceneIdx);
+if exist(fullfile(dataRoot, targetScene), 'dir')
+    scenario = targetScene;
+else
+    scenario = scenes(1).name;
+end
+fprintf('场景: %s\n', scenario);
 
-%% ===== DT / RT / AT 特征谱图 =====
+nRange   = para.ADCSamples;       % 256
+nLoops   = para.numLoops;         % 64
+chirpsPC = para.chirpsPerCycle;   % 12
+nRX = para.numRXPerDevice;        % 4
+nDev = para.numDevices;           % 4
 
-% ----- 重读全部帧（仅 master，用于 RT/DT）-----
-fprintf('处理全部帧用于 RT/DT ...\n');
-adcFull = read4DRawData(fullfile(dataRoot, scenario, 'master_0000_data.bin'), para);
-[n_rx, n_range, ~, n_frames] = size(adcFull);
-range_win = hanning(n_range);
-dopp_win  = hanning(para.numLoops);
+range_win = hanning(nRange);
+dopp_win  = hanning(nLoops);
+vmax = para.lambda / (4 * para.Chirptime * chirpsPC);
+range_axis = (0:nRange-1) * para.dr;
+dopp_axis  = linspace(-vmax, vmax, nLoops);
+fprintf('  vmax=%.2f m/s, dr=%.2f cm\n', vmax, para.dr*100);
 
-rt_map = zeros(n_range, n_frames);      % RT: 距离 × 帧
-dt_map = zeros(para.numLoops, n_frames); % DT: 速度 × 帧
+r_min = round(0.5 / para.dr) + 1;
+r_max = round(5.0 / para.dr);
+zb = floor(nLoops/2) + 1;
+non_dc = [1:zb-1, zb+1:nLoops];  % 非DC bin索引
 
-% 找目标距离bin（能量最强的帧的中间几帧取平均）
-mid_f = round(n_frames/2);
-frame_mid = squeeze(adcFull(:, :, :, mid_f));
-rfft_mid  = fft(frame_mid .* range_win.', [], 2);
-rfft_mid  = mean(abs(rfft_mid).^2, [1, 3]);  % RX+Chirp平均
-[~, target_bin] = max(rfft_mid(1:round(5/para.dr)));  % 0-5m内找最强
+% ============ Phase 1: Master -> RTM + DTM ============
+fprintf('Phase 1: RTM + DTM (Master, 全帧)...\n');
+masterBin = fullfile(dataRoot, scenario, 'master_0000_data.bin');
+adcMaster = read4DRawData(masterBin, para);
+nFrames = size(adcMaster, 4);
+time_axis = (0:nFrames-1) * para.Frameinter;
 
-for f = 1:n_frames
-    frame = squeeze(adcFull(:, :, :, f));
-    % Range FFT
+rt_map = zeros(nRange, nFrames);
+dt_map = zeros(nLoops, nFrames);
+
+for f = 1:nFrames
+    frame = squeeze(adcMaster(:, :, :, f));
+
+    % Range FFT + TDM解复用
     rfft = fft(frame .* range_win.', [], 2);
-    % RT列：距离剖面（RX+Chirp 平均功率）
-    rt_map(:, f) = squeeze(mean(abs(rfft).^2, [1, 3]));
+    rd = reshape(rfft, nRX, nRange, chirpsPC, nLoops);
+    rd = rd - mean(rd, 4);  % MTI
 
-    % TDM解复用 + Doppler
-    rd = reshape(rfft, n_rx, n_range, para.chirpsPerCycle, para.numLoops);
-    rd = rd - mean(rd, 4);
-    rd = fft(rd .* reshape(dopp_win, 1,1,1,para.numLoops), [], 4);
+    % Doppler FFT
+    rd = fft(rd .* reshape(dopp_win, 1,1,1,nLoops), [], 4);
     rd = fftshift(rd, 4);
-    rd(:, :, :, zb-1:zb+1) = 0;
     rd_pwr = squeeze(mean(sum(abs(rd).^2, 1), 3));  % [256, 64]
-    % DT列：目标bin的多普勒剖面
-    dt_map(:, f) = rd_pwr(target_bin, :);
+
+    % RTM: 非DC Doppler能量沿距离的分布 (运动在哪里)
+    rt_map(:, f) = sum(rd_pwr(:, non_dc), 2);
+
+    % DTM: 所有距离bin的Doppler能量累加 (运动有多快)
+    dt_map(:, f) = sum(rd_pwr(r_min:r_max, :), 1);
 end
 
-rt_map = 10*log10(rt_map + eps);
-dt_map = 10*log10(dt_map + eps);
-time_axis = (0:n_frames-1) * para.Frameinter;
+% ---- 时域背景归一化 (10分位数作为背景, 比值转dB) ----
+rt_bg = prctile(rt_map, 10, 2);
+rt_map = 10*log10(rt_map ./ (rt_bg + 1e-6));
+dt_bg = prctile(dt_map, 10, 2);
+dt_map = 10*log10(dt_map ./ (dt_bg + 1e-6));
 
-% ----- AT谱：需要全部4设备，只取每隔step帧加速 -----
-fprintf('读取4设备用于AT ...\n');
-n_angle = 256;
-at_step = 4;  % 每4帧取1帧加速
-at_frames = 1:at_step:n_frames;
-n_at = length(at_frames);
-at_map = zeros(n_angle, n_at);
+% ============ Phase 2: 全部4设备 -> ATM + ETM ============
+fprintf('Phase 2: ATM + ETM (全部4设备, 每2帧, 全距离累积)...\n');
 devices = {'master', 'slave1', 'slave2', 'slave3'};
-% 一次性读全部4设备（内存: 4×237MB≈950MB）
-devAll = cell(4,1);
-for d = 1:4
+devAll = cell(nDev, 1);
+for d = 1:nDev
     devBin = fullfile(dataRoot, scenario, sprintf('%s_0000_data.bin', devices{d}));
-    devAll{d} = read4DRawData(devBin, para);  % [4, 256, 768, 79]
+    devAll{d} = read4DRawData(devBin, para);
 end
 
-for fi = 1:n_at
+n_ele = 256;  n_azi = 256;
+ele_axis = asind(linspace(-1, 1, n_ele));
+azi_axis = asind(linspace(-1, 1, n_azi));
+
+at_step = 2;
+at_frames = 1:at_step:nFrames;
+nAT = length(at_frames);
+at_map = zeros(n_azi, nAT);
+et_map = zeros(n_ele, nAT);
+
+tx_chirp = para.chirpsPerCycle;  % Dev1 TX0
+
+for fi = 1:nAT
     f = at_frames(fi);
-    % 4设备 × 4RX = 16通道，在目标距离bin处取复数
-    rx_val = zeros(16, 1);
-    for d = 1:4
-        devFrame = squeeze(devAll{d}(:, :, 1, f));       % [4, 256]
-        rfft_dev = fft(devFrame .* range_win.', [], 2);   % [4, 256]
-        rx_val((d-1)*4+1 : d*4) = rfft_dev(:, target_bin);
+
+    % 预计算每设备的MTI数据 (整帧一次)
+    rd_mti = cell(nDev, 1);
+    for d = 1:nDev
+        frm = squeeze(devAll{d}(:, :, :, f));
+        rfft_d = fft(frm .* range_win.', [], 2);
+        rfft_d = reshape(rfft_d, nRX, nRange, chirpsPC, nLoops);
+        rfft_d = rfft_d - mean(rfft_d, 4);
+        rd_mti{d} = rfft_d;  % [4, 256, 12, 64]
     end
-    at_spec = fftshift(abs(fft(rx_val, n_angle)));
-    at_map(:, fi) = at_spec.^2;
+
+    % 跨所有ROI距离bin累积角度谱
+    spec_acc = zeros(n_ele, n_azi);
+    for r = r_min:r_max
+        rx16 = zeros(para.totalRX, 1);
+        for d = 1:nDev
+            % 该距离bin, TX0 chirp, 所有loop的均值
+            rx16((d-1)*nRX+1 : d*nRX) = ...
+                squeeze(mean(rd_mti{d}(:, r, tx_chirp, :), 4));
+        end
+        spec2d = fftshift(fft2(reshape(rx16, nRX, nDev).', n_ele, n_azi));
+        spec_acc = spec_acc + abs(spec2d).^2;
+    end
+
+    at_map(:, fi) = sum(spec_acc, 1);
+    et_map(:, fi) = sum(spec_acc, 2);
 end
-at_map = 10*log10(at_map + eps);
-angle_axis = asind(linspace(-1, 1, n_angle));
+
+% ---- 时域背景归一化 ----
+at_bg = prctile(at_map, 10, 2);
+at_map = 10*log10(at_map ./ (at_bg + 1e-6));
+et_bg = prctile(et_map, 10, 2);
+et_map = 10*log10(et_map ./ (et_bg + 1e-6));
+
 at_time = (at_frames-1) * para.Frameinter;
 
-% ===== 画图 =====
-% 自适应色标辅助函数：取数据的 [5%, 99.5%] 分位数作为色域
-set_clim = @(m) clim([prctile(m(:),5), prctile(m(:),99.5)]);
+% ============ 诊断 ============
+fprintf('  RTM: [%.1f, %.1f] dB, std=%.1f\n', min(rt_map(:)), max(rt_map(:)), std(rt_map(:)));
+fprintf('  DTM: [%.1f, %.1f] dB, std=%.1f\n', min(dt_map(:)), max(dt_map(:)), std(dt_map(:)));
+fprintf('  ATM: [%.1f, %.1f] dB, std=%.1f\n', min(at_map(:)), max(at_map(:)), std(at_map(:)));
+fprintf('  ETM: [%.1f, %.1f] dB, std=%.1f\n', min(et_map(:)), max(et_map(:)), std(et_map(:)));
 
-% RT谱
-figure('Color','w');
+% ============ 画图 ============
+set_clim = @(m) clim([max(prctile(m(:),3), -15), min(prctile(m(:),97), 20)]);
+
+figure('Color','w', 'Name','RTM');
 imagesc(time_axis, range_axis, rt_map); set(gca,'YDir','normal');
-xlabel('时间 (s)'); ylabel('距离 (m)'); title(sprintf('4D RT 距离-时间谱 — %s', scenario));
-colormap jet; colorbar; ylim([0, 5]); grid on; set_clim(rt_map);
+xlabel('时间 (s)'); ylabel('距离 (m)');
+title(sprintf('RTM 距离-时间谱 — %s', scenario));
+colormap jet; colorbar; grid on;
+ylim([r_min*para.dr, r_max*para.dr]); set_clim(rt_map);
 
-% DT谱
-figure('Color','w');
-dopp_axis = linspace(-vmax, vmax, para.numLoops);
+figure('Color','w', 'Name','DTM');
 imagesc(time_axis, dopp_axis, dt_map); set(gca,'YDir','normal');
-xlabel('时间 (s)'); ylabel('速度 (m/s)'); title(sprintf('4D DT 多普勒-时间谱 — %s', scenario));
+xlabel('时间 (s)'); ylabel('速度 (m/s)');
+title(sprintf('DTM 多普勒-时间谱 — %s', scenario));
 colormap jet; colorbar; grid on; set_clim(dt_map);
 
-% AT谱
-figure('Color','w');
-imagesc(at_time, angle_axis, at_map); set(gca,'YDir','normal');
-xlabel('时间 (s)'); ylabel('方位角 (度)'); title(sprintf('4D AT 方位角-时间谱 — %s', scenario));
+figure('Color','w', 'Name','ATM');
+imagesc(at_time, azi_axis, at_map); set(gca,'YDir','normal');
+xlabel('时间 (s)'); ylabel('方位角 (度)');
+title(sprintf('ATM 方位角-时间谱 — %s', scenario));
 colormap jet; colorbar; grid on; set_clim(at_map);
 
-fprintf('RT/DT/AT 全部完成!\n');
+figure('Color','w', 'Name','ETM');
+imagesc(at_time, ele_axis, et_map); set(gca,'YDir','normal');
+xlabel('时间 (s)'); ylabel('俯仰角 (度)');
+title(sprintf('ETM 俯仰角-时间谱 — %s', scenario));
+colormap jet; colorbar; grid on; set_clim(et_map);
 
-%% ===== 微多普勒谱（STFT时频分析，参照3D micdopplertest_rd.m）=====
-fprintf('生成微多普勒谱 ...\n');
+fprintf('RTM / DTM / ATM / ETM 全部完成!\n');
 
-% 取master设备TX0的chirp序列（TDM周期中第12个chirp，即索引12）
-tx_idx = para.chirpsPerCycle;  % master TX0 = chirp 12 (最后一个)
+% 导出
+outDir = fullfile(script_dir, '..', 'figures');
+if ~exist(outDir, 'dir'), mkdir(outDir); end
+matPath = fullfile(outDir, [scenario '_4Dmaps.mat']);
+save(matPath, 'rt_map', 'dt_map', 'at_map', 'et_map', ...
+    'time_axis', 'at_time', 'range_axis', 'dopp_axis', ...
+    'azi_axis', 'ele_axis', 'para', 'scenario');
+fprintf('  数据: %s\n', matPath);
 
-% 两遍扫描：①最强bin搜索 ②多bin融合提取慢时间
-% 第一遍：累加能量找最强距离bin
-energy_acc = zeros(n_range, 1);
-for f = 1:n_frames
-    frame = squeeze(adcFull(:, :, :, f));
-    rfft = fft(frame .* range_win.', [], 2);
-    rfft = reshape(rfft, n_rx, n_range, para.chirpsPerCycle, para.numLoops);
-    % RX0, TX0 chirp, 所有loop的能量
-    energy_acc = energy_acc + squeeze(mean(abs(rfft(1, :, tx_idx, :)).^2, 4));
+figs = findobj('Type', 'figure');
+for i = 1:length(figs)
+    fname = get(figs(i), 'Name');
+    if isempty(fname), fname = sprintf('fig%d', i); end
+    print(figs(i), fullfile(outDir, [scenario '_' fname '.png']), '-dpng', '-r150');
+    fprintf('  保存: %s_%s.png\n', scenario, fname);
 end
-[~, best_bin] = max(energy_acc(1:round(5/para.dr)));
-
-% 第二遍：多bin融合(±3)提取慢时间，拼接所有帧
-all_slow = [];
-bin_span = -3:3;
-for f = 1:n_frames
-    frame = squeeze(adcFull(:, :, :, f));
-    rfft = fft(frame .* range_win.', [], 2);
-    rfft = reshape(rfft, n_rx, n_range, para.chirpsPerCycle, para.numLoops);
-    rfft = rfft - mean(rfft, 4);  % MTI: 慢时间维去均值
-
-    bins_sel = best_bin + bin_span;
-    bins_sel = bins_sel(bins_sel >= 1 & bins_sel <= n_range);
-    % 多bin + 多RX 求和融合
-    slow = squeeze(sum(sum(rfft(:, bins_sel, tx_idx, :), 1), 2));  % [64, 1]
-    % 尖峰抑制
-    amp = abs(slow);
-    slow(amp > median(amp)*5) = 0;
-    all_slow = [all_slow; slow];
-end
-
-signal = detrend(all_slow(:));
-fs_slow = 1 / (para.Chirptime * para.chirpsPerCycle);  % TX重复频率
-
-% STFT
-nperseg  = 128;
-noverlap = 100;
-nfft     = 512;
-[S, F, T] = spectrogram(signal, hanning(nperseg), noverlap, nfft, fs_slow, 'centered');
-S_db = 20 * log10(abs(S) + 1e-6);
-
-% 频率→速度轴
-vel_axis = F * para.lambda / 2;
-vel_mask = abs(vel_axis) <= vmax;
-S_db = S_db(vel_mask, :);
-vel_axis = vel_axis(vel_mask);
-
-% 画微多普勒谱
-figure('Color','w');
-imagesc(T, vel_axis, S_db); set(gca,'YDir','normal');
-xlabel('时间 (s)'); ylabel('速度 (m/s)');
-title(sprintf('4D 微多普勒谱 — %s (master TX0, bin=%d)', scenario, best_bin));
-colormap jet; colorbar; set_clim(S_db); grid on;
-
-fprintf('微多普勒完成!\n');

@@ -22,6 +22,7 @@ __pycache__/
 *.bmp
 *.fig
 *.pptx
+*.pdf
 
 # ===== 系统文件 =====
 .DS_Store
