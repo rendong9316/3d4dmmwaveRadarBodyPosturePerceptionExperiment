@@ -1,0 +1,70 @@
+ 
+要开始，请键入 doc。
+有关产品信息，请访问 www.mathworks.com。
+ 
+  4D 级联雷达参数:
+    载频: 77 GHz | 设备数: 4 | TX: 12 | RX: 16 | 虚拟通道: 192
+    ADC采样: 256 | Chirp/周期: 12 | Loops: 64 | 帧数: 80
+    带宽: 2527.6 MHz | 距离分辨率: 5.93 cm
+    TDM-MIMO chirp映射 (chirp -> 设备.TX):
+      chirp 0 -> Dev4 TX2
+      chirp 1 -> Dev4 TX1
+      chirp 2 -> Dev4 TX0
+      chirp 3 -> Dev3 TX2
+      chirp 4 -> Dev3 TX1
+      chirp 5 -> Dev3 TX0
+      chirp 6 -> Dev2 TX2
+      chirp 7 -> Dev2 TX1
+      chirp 8 -> Dev2 TX0
+      chirp 9 -> Dev1 TX2
+      chirp10 -> Dev1 TX1
+      chirp11 -> Dev1 TX0
+T_cycle=552.0us v_max=1.76m/s vr=0.055m/s
+v_axis[33](DC)=0.000 v_axis[51](1m/s)=0.993
+
+===== Frame 20 diagnostic =====
+  (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768   (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768   (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768   (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768 
+--- Strongest velocity at each range ---
+  R=0.95m: strongest bin=32 v=-0.06 m/s pwr=103.4 dB
+  R=1.42m: strongest bin=33 v=0.00 m/s pwr=98.1 dB
+  R=1.90m: strongest bin=33 v=0.00 m/s pwr=123.3 dB
+  R=2.37m: strongest bin=33 v=0.00 m/s pwr=94.4 dB
+  R=2.85m: strongest bin=33 v=0.00 m/s pwr=100.1 dB
+  R=3.32m: strongest bin=33 v=0.00 m/s pwr=98.1 dB
+  R=3.80m: strongest bin=33 v=0.00 m/s pwr=126.1 dB
+  R=4.27m: strongest bin=33 v=0.00 m/s pwr=93.8 dB
+  R=4.75m: strongest bin=33 v=0.00 m/s pwr=110.3 dB
+
+--- Velocity bin energy (R=1-5m avg) ---
+  bin33: v=  +0.00 m/s pwr=113.9 dB
+  bin34: v=  +0.06 m/s pwr=108.0 dB
+  bin32: v=  -0.06 m/s pwr=107.7 dB
+  bin35: v=  +0.11 m/s pwr=96.7 dB
+  bin36: v=  +0.17 m/s pwr=96.2 dB
+  bin37: v=  +0.22 m/s pwr=93.6 dB
+  bin38: v=  +0.28 m/s pwr=88.0 dB
+  bin31: v=  -0.11 m/s pwr=80.5 dB
+  bin39: v=  +0.33 m/s pwr=75.6 dB
+  bin30: v=  -0.17 m/s pwr=73.2 dB
+
+--- CFAR detection test ---
+  tf=3: 60 det, v=[-0.06,0.17] m/s
+  tf=5: 45 det, v=[-0.06,0.06] m/s
+  tf=7: 35 det, v=[-0.06,0.06] m/s
+  tf=10: 31 det, v=[-0.06,0.06] m/s
+  tf=15: 25 det, v=[-0.06,0.06] m/s
+
+--- Signal at v=1.0 m/s (bin 51) ---
+  Top 5 ranges: R=1.07m(69.4dB) R=4.87m(69.2dB) R=1.01m(69.1dB) R=1.19m(69.1dB) R=0.95m(68.9dB) 
+  R=2m: v=0 dB=113.9, v=1m/s dB=60.5, v=-1m/s dB=60.5
+
+--- Angle estimation diagnostic ---
+  R=2m v=1m/s 16RX amp: mean=1.05e+03 min=1.93e+02 max=2.00e+03
+  Phase(deg): 27 164 -54 173 167 -150 89 -95 88 -0 23 13 -72 104 81 37 
+  Angle peak/median=2.17 peak at -24.3 deg
+
+===== Diagnostic complete =====

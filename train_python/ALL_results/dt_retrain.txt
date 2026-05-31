@@ -1,0 +1,79 @@
+============================================================
+DT image action classification
+Train: 814 | Test: 206
+Classes: ['bend', 'boxing', 'empty', 'falldown', 'jump', 'liedown', 'run', 'sit', 'stand', 'swing', 'walk']
+Device: cuda
+============================================================
+  bend        train= 80  test= 20
+  boxing      train= 80  test= 20
+  empty       train= 14  test=  6
+  falldown    train= 80  test= 20
+  jump        train= 80  test= 20
+  liedown     train= 80  test= 20
+  run         train= 80  test= 20
+  sit         train= 80  test= 20
+  stand       train= 80  test= 20
+  swing       train= 80  test= 20
+  walk        train= 80  test= 20
+
+============================================================
+Training: Epochs=50 Batch=32 LR=0.0010
+Params: 469483
+============================================================
+Epoch   1/50 | Loss: 1.9150 | Acc: 19.90% | Best: 19.90%
+Epoch   5/50 | Loss: 0.7843 | Acc: 69.42% | Best: 69.42%
+Epoch  10/50 | Loss: 0.4052 | Acc: 84.47% | Best: 90.78%
+Epoch  15/50 | Loss: 0.2982 | Acc: 92.23% | Best: 92.72%
+Epoch  20/50 | Loss: 0.1992 | Acc: 94.66% | Best: 94.66%
+Epoch  25/50 | Loss: 0.1307 | Acc: 96.60% | Best: 96.60%
+Epoch  30/50 | Loss: 0.0923 | Acc: 97.57% | Best: 98.54%
+Epoch  35/50 | Loss: 0.0916 | Acc: 95.63% | Best: 98.54%
+Epoch  40/50 | Loss: 0.0572 | Acc: 97.57% | Best: 99.03%
+Epoch  45/50 | Loss: 0.0528 | Acc: 99.03% | Best: 99.03%
+Epoch  50/50 | Loss: 0.0511 | Acc: 98.54% | Best: 99.03%
+
+Training done! Time: 389.5s | Best accuracy: 99.03%
+
+============================================================
+Confusion Matrix:
+----------------------------------------------------------------------
+Actual\Pred   bendboxing emptyfalldown  jumpliedown   run   sit stand swing  walk Total     Acc%
+----------------------------------------------------------------------
+bend            20     0     0     0     0     0     0     0     0     0     0    20   100.0%
+boxing           0    20     0     0     0     0     0     0     0     0     0    20   100.0%
+empty            0     0     6     0     0     0     0     0     0     0     0     6   100.0%
+falldown         0     0     0    20     0     0     0     0     0     0     0    20   100.0%
+jump             0     0     0     0    20     0     0     0     0     0     0    20   100.0%
+liedown          0     0     0     0     0    20     0     0     0     0     0    20   100.0%
+run              0     0     0     0     0     0    20     0     0     0     0    20   100.0%
+sit              0     0     1     0     0     0     0    18     1     0     0    20    90.0%
+stand            0     0     0     0     0     0     0     0    20     0     0    20   100.0%
+swing            0     1     0     0     0     0     0     0     0    19     0    20    95.0%
+walk             0     0     0     0     0     0     0     0     0     0    20    20   100.0%
+----------------------------------------------------------------------
+Overall: 203/206 = 98.54%
+
+              precision    recall  f1-score   support
+
+        bend     1.0000    1.0000    1.0000        20
+      boxing     0.9524    1.0000    0.9756        20
+       empty     0.8571    1.0000    0.9231         6
+    falldown     1.0000    1.0000    1.0000        20
+        jump     1.0000    1.0000    1.0000        20
+     liedown     1.0000    1.0000    1.0000        20
+         run     1.0000    1.0000    1.0000        20
+         sit     1.0000    0.9000    0.9474        20
+       stand     0.9524    1.0000    0.9756        20
+       swing     1.0000    0.9500    0.9744        20
+        walk     1.0000    1.0000    1.0000        20
+
+    accuracy                         0.9854       206
+   macro avg     0.9784    0.9864    0.9815       206
+weighted avg     0.9866    0.9854    0.9854       206
+
+Model saved: dt_classifier.pth
+Results saved: training_results.png
+Per-class accuracy saved: per_class_accuracy.png
+
+============================================================
+All done!

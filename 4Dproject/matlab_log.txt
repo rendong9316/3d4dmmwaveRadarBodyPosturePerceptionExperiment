@@ -1,0 +1,74 @@
+ 
+要开始，请键入 doc。
+有关产品信息，请访问 www.mathworks.com。
+ 
+  4D 级联雷达参数:
+    载频: 77 GHz | 设备数: 4 | TX: 12 | RX: 16 | 虚拟通道: 192
+    ADC采样: 256 | Chirp/周期: 12 | Loops: 64 | 帧数: 80
+    带宽: 2527.6 MHz | 距离分辨率: 5.93 cm
+    TDM-MIMO chirp映射 (chirp -> 设备.TX):
+      chirp 0 -> Dev4 TX2
+      chirp 1 -> Dev4 TX1
+      chirp 2 -> Dev4 TX0
+      chirp 3 -> Dev3 TX2
+      chirp 4 -> Dev3 TX1
+      chirp 5 -> Dev3 TX0
+      chirp 6 -> Dev2 TX2
+      chirp 7 -> Dev2 TX1
+      chirp 8 -> Dev2 TX0
+      chirp 9 -> Dev1 TX2
+      chirp10 -> Dev1 TX1
+      chirp11 -> Dev1 TX0
+===== 4D雷达点云生成 =====
+场景: CCdata_walk_0001 | 帧: 15-30 | SNR_min: 8dB | 角度质量: 1.8x
+fc=77GHz dr=5.9cm vmax=1.8m/s totalRX=16
+MTI=1 | ZeroVelSupp=1 | SNR_min=8dB
+读取 master (16帧)...  (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768 16]
+ done
+读取 slave1 (16帧)...  (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768 16]
+ done
+读取 slave2 (16帧)...  (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768 16]
+ done
+读取 slave3 (16帧)...  (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768 16]
+ done
+
+===== 逐帧处理 =====
+Frame 15: raw=  2 → SNR= 2 → angle+spatial= 2 pts
+Frame 16: raw=  6 → SNR= 6 → angle+spatial= 3 pts
+Frame 17: raw=  8 → SNR= 8 → angle+spatial= 6 pts
+Frame 18: raw= 13 → SNR=12 → angle+spatial= 6 pts
+Frame 19: raw= 15 → SNR=12 → angle+spatial= 8 pts
+Frame 20: raw= 20 → SNR=12 → angle+spatial= 9 pts
+Frame 21: raw= 15 → SNR=12 → angle+spatial= 6 pts
+Frame 22: raw= 17 → SNR=12 → angle+spatial= 5 pts
+Frame 23: raw= 17 → SNR=12 → angle+spatial= 3 pts
+Frame 24: raw= 19 → SNR=12 → angle+spatial= 1 pts
+Frame 25: raw= 32 → SNR=12 → angle+spatial= 0 pts
+Frame 26: raw= 32 → SNR=12 → angle+spatial= 0 pts
+Frame 27: raw= 36 → SNR=12 → angle+spatial= 0 pts
+Frame 28: raw= 31 → SNR=12 → angle+spatial= 0 pts
+Frame 29: raw= 27 → SNR=12 → angle+spatial= 1 pts
+Frame 30: raw= 32 → SNR=12 → angle+spatial= 0 pts
+
+========================================
+统计汇总:
+  总帧数: 16
+  CFAR原始检测总数: 322
+  SNR筛选后: 172
+  角度+空间筛选后: 50
+  最终点云: 50 点
+  X范围: [-2.39, 2.36] m
+  Y范围: [0.59, 4.51] m
+  Z范围: [0.12, 0.82] m
+  V范围: [0.14, 0.48] m/s
+保存: CCdata_walk_0001_1_RD_CFAR.png
+保存: CCdata_walk_0001_2_3D_PointCloud.png
+保存: CCdata_walk_0001_3_XY_TopView.png
+保存: CCdata_walk_0001_4_XZ_SideView.png
+保存: CCdata_walk_0001_5_YZ_FrontView.png
+
+===== 完成 =====

@@ -1,0 +1,85 @@
+ 
+要开始，请键入 doc。
+有关产品信息，请访问 www.mathworks.com。
+ 
+  4D 级联雷达参数:
+    载频: 77 GHz | 设备数: 4 | TX: 12 | RX: 16 | 虚拟通道: 192
+    ADC采样: 256 | Chirp/周期: 12 | Loops: 64 | 帧数: 80
+    带宽: 2527.6 MHz | 距离分辨率: 5.93 cm
+    TDM-MIMO chirp映射 (chirp -> 设备.TX):
+      chirp 0 -> Dev4 TX2
+      chirp 1 -> Dev4 TX1
+      chirp 2 -> Dev4 TX0
+      chirp 3 -> Dev3 TX2
+      chirp 4 -> Dev3 TX1
+      chirp 5 -> Dev3 TX0
+      chirp 6 -> Dev2 TX2
+      chirp 7 -> Dev2 TX1
+      chirp 8 -> Dev2 TX0
+      chirp 9 -> Dev1 TX2
+      chirp10 -> Dev1 TX1
+      chirp11 -> Dev1 TX0
+===== 4D点云 v3.0 (DT.m/RT.m方法) =====
+场景: CCdata_walk_0001 | 帧: 35-55 | 功率阈值: 95dB | 目标距离: 2.4+-1.0m
+fc=77GHz dr=5.9cm vmax=1.8m/s
+读取master原始数据(DT.m方式)... 79帧
+读取4设备数据(角度估计)...  (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768 21]
+  (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768 21]
+  (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768 21]
+  (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768 21]
+ done
+
+===== 阶段1: RT/DT检测 =====
+
+RT图: dB=[62.2,135.0]
+目标窗(2.4+-1.0m):
+  Frame 35: R=2.37m (122.9dB)
+  Frame 38: R=2.37m (125.6dB)
+  Frame 41: R=2.31m (123.2dB)
+  Frame 44: R=2.20m (125.3dB)
+  Frame 47: R=2.43m (129.0dB)
+  Frame 50: R=2.37m (129.2dB)
+  Frame 53: R=2.61m (123.7dB)
+
+DT图: dB=[75.1,135.0]
+  Frame 35: 最强v=-0.11m/s (122.9dB)
+  Frame 38: 最强v=-0.11m/s (125.6dB)
+  Frame 41: 最强v=-0.06m/s (123.2dB)
+  Frame 44: 最强v=0.28m/s (125.3dB)
+  Frame 47: 最强v=0.28m/s (129.0dB)
+  Frame 50: 最强v=0.55m/s (129.2dB)
+  Frame 53: 最强v=0.50m/s (123.7dB)
+
+===== 阶段2: 检测+角度估计 =====
+Frame 35: pwr=12 ang=0(0A/12S fail)
+Frame 36: pwr=24 ang=0(0A/24S fail)
+Frame 37: pwr=14 ang=0(0A/14S fail)
+Frame 38: pwr=8 ang=0(0A/8S fail)
+Frame 39: pwr=12 ang=0(0A/12S fail)
+Frame 40: pwr=11 ang=0(0A/11S fail)
+Frame 41: pwr=24 ang=0(0A/24S fail)
+Frame 42: pwr=18 ang=0(0A/18S fail)
+Frame 43: pwr=11 ang=0(0A/11S fail)
+Frame 44: pwr=30 ang=0(0A/30S fail)
+Frame 45: pwr=30 ang=0(0A/30S fail)
+Frame 46: pwr=30 ang=0(0A/30S fail)
+Frame 47: pwr=30 ang=0(0A/30S fail)
+Frame 48: pwr=30 ang=0(0A/30S fail)
+Frame 49: pwr=30 ang=0(0A/30S fail)
+Frame 50: pwr=30 ang=0(0A/30S fail)
+Frame 51: pwr=30 ang=0(0A/30S fail)
+Frame 52: pwr=30 ang=0(0A/30S fail)
+Frame 53: pwr=30 ang=0(0A/30S fail)
+Frame 54: pwr=30 ang=0(0A/30S fail)
+Frame 55: pwr=30 ang=0(0A/30S fail)
+
+========================================
+CFAR: 494 -> 功率: 494 -> 角度+空间: 0
+点云: 0点
+[警告: no points] 
+[> 位置：run_4Dpointcloud (第 241 行)
+位置: run (第 91 行)] 

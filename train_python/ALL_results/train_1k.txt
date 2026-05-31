@@ -1,0 +1,88 @@
+Device: cuda
+Loading D:\downlowd_cloud\方向2-雷达数据demo\train_python\pointcloud_data\all_pointclouds.mat...
+  train: 699 samples
+Loading D:\downlowd_cloud\方向2-雷达数据demo\train_python\pointcloud_data\all_pointclouds.mat...
+  test: 301 samples
+Train: 699, Test: 301
+Params: 1,424,778
+Epoch  1: Tr=36.5% Te=15.0%
+Epoch  2: Tr=51.5% Te=63.5%
+Epoch  3: Tr=56.8% Te=48.8%
+Epoch  4: Tr=62.7% Te=65.4%
+Epoch  5: Tr=62.8% Te=70.1%
+Epoch  6: Tr=65.7% Te=75.4%
+Epoch  7: Tr=73.1% Te=52.8%
+Epoch  8: Tr=83.7% Te=98.0%
+Epoch  9: Tr=84.7% Te=99.0%
+Epoch 10: Tr=87.8% Te=90.4%
+Epoch 11: Tr=93.1% Te=91.0%
+Epoch 12: Tr=91.8% Te=95.0%
+Epoch 13: Tr=94.1% Te=65.4%
+Epoch 14: Tr=93.7% Te=97.3%
+Epoch 15: Tr=94.0% Te=98.0%
+Epoch 16: Tr=94.0% Te=99.7%
+Epoch 17: Tr=95.4% Te=91.7%
+Epoch 18: Tr=93.8% Te=95.7%
+Epoch 19: Tr=94.8% Te=94.4%
+Epoch 20: Tr=95.9% Te=95.0%
+Epoch 21: Tr=97.3% Te=95.3%
+Epoch 22: Tr=95.9% Te=89.4%
+Epoch 23: Tr=96.0% Te=93.4%
+Epoch 24: Tr=96.6% Te=97.0%
+Epoch 25: Tr=97.7% Te=92.0%
+Epoch 26: Tr=98.0% Te=95.7%
+Epoch 27: Tr=98.9% Te=93.4%
+Epoch 28: Tr=98.4% Te=92.7%
+Epoch 29: Tr=99.1% Te=90.7%
+Epoch 30: Tr=99.7% Te=91.7%
+Epoch 31: Tr=99.1% Te=90.0%
+Epoch 32: Tr=99.3% Te=95.3%
+Epoch 33: Tr=99.7% Te=92.7%
+Epoch 34: Tr=99.6% Te=91.0%
+Epoch 35: Tr=99.3% Te=95.7%
+Epoch 36: Tr=98.9% Te=94.7%
+Epoch 37: Tr=99.1% Te=91.0%
+Epoch 38: Tr=98.9% Te=89.0%
+Epoch 39: Tr=98.7% Te=91.4%
+Epoch 40: Tr=100.0% Te=87.7%
+Epoch 41: Tr=99.7% Te=89.4%
+Epoch 42: Tr=99.7% Te=84.4%
+Epoch 43: Tr=100.0% Te=92.0%
+Epoch 44: Tr=99.6% Te=95.0%
+Epoch 45: Tr=99.9% Te=91.7%
+Epoch 46: Tr=99.4% Te=89.4%
+Epoch 47: Tr=99.1% Te=90.7%
+Epoch 48: Tr=99.4% Te=91.7%
+Epoch 49: Tr=99.1% Te=91.4%
+Epoch 50: Tr=99.9% Te=90.4%
+Epoch 51: Tr=99.6% Te=91.7%
+Epoch 52: Tr=99.1% Te=95.7%
+Epoch 53: Tr=99.9% Te=90.0%
+Epoch 54: Tr=100.0% Te=89.4%
+Epoch 55: Tr=99.9% Te=90.4%
+Epoch 56: Tr=99.6% Te=93.0%
+Epoch 57: Tr=99.0% Te=94.7%
+Epoch 58: Tr=99.7% Te=92.7%
+Epoch 59: Tr=99.7% Te=82.1%
+Epoch 60: Tr=99.0% Te=96.7%
+
+Best: 99.7%
+Saved training_results.png
+
+              precision    recall  f1-score   support
+
+        walk       1.00      1.00      1.00        30
+        jump       1.00      1.00      1.00        30
+       swing       1.00      1.00      1.00        30
+        bend       1.00      1.00      1.00        30
+      boxing       1.00      0.97      0.98        30
+         sit       1.00      1.00      1.00        30
+       stand       1.00      1.00      1.00        31
+         run       1.00      1.00      1.00        30
+    falldown       0.97      1.00      0.98        30
+     liedown       1.00      1.00      1.00        30
+
+    accuracy                           1.00       301
+   macro avg       1.00      1.00      1.00       301
+weighted avg       1.00      1.00      1.00       301
+

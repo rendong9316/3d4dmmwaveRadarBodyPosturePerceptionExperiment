@@ -1,0 +1,79 @@
+ 
+要开始，请键入 doc。
+有关产品信息，请访问 www.mathworks.com。
+ 
+  4D 级联雷达参数:
+    载频: 77 GHz | 设备数: 4 | TX: 12 | RX: 16 | 虚拟通道: 192
+    ADC采样: 256 | Chirp/周期: 12 | Loops: 64 | 帧数: 80
+    带宽: 2527.6 MHz | 距离分辨率: 5.93 cm
+    TDM-MIMO chirp映射 (chirp -> 设备.TX):
+      chirp 0 -> Dev4 TX2
+      chirp 1 -> Dev4 TX1
+      chirp 2 -> Dev4 TX0
+      chirp 3 -> Dev3 TX2
+      chirp 4 -> Dev3 TX1
+      chirp 5 -> Dev3 TX0
+      chirp 6 -> Dev2 TX2
+      chirp 7 -> Dev2 TX1
+      chirp 8 -> Dev2 TX0
+      chirp 9 -> Dev1 TX2
+      chirp10 -> Dev1 TX1
+      chirp11 -> Dev1 TX0
+===== 4D雷达点云生成 =====
+场景: CCdata_walk_0001 | 帧: 35-55 | SNR_min: 8dB | 角度质量: 1.8x
+fc=77GHz dr=5.9cm vmax=1.8m/s totalRX=16
+MTI=1 | ZeroVelSupp=1 | SNR_min=8dB
+读取 master (21帧)...  (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768 21]
+ done
+读取 slave1 (21帧)...  (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768 21]
+ done
+读取 slave2 (21帧)...  (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768 21]
+ done
+读取 slave3 (21帧)...  (JSON=80帧, 文件实际=79帧)
+  读取完成: [4 256 768 21]
+ done
+
+===== 逐帧处理 =====
+Frame 35: raw=  8 → SNR= 8 → angle+spatial= 3 pts
+Frame 36: raw=  7 → SNR= 7 → angle+spatial= 4 pts
+Frame 37: raw=  9 → SNR= 9 → angle+spatial= 4 pts
+Frame 38: raw= 19 → SNR=12 → angle+spatial= 3 pts
+Frame 39: raw= 24 → SNR=12 → angle+spatial= 0 pts
+Frame 40: raw= 19 → SNR=12 → angle+spatial= 0 pts
+Frame 41: raw= 12 → SNR=12 → angle+spatial= 4 pts
+Frame 42: raw= 14 → SNR=12 → angle+spatial= 8 pts
+Frame 43: raw= 12 → SNR=12 → angle+spatial=10 pts
+Frame 44: raw= 21 → SNR=12 → angle+spatial= 8 pts
+Frame 45: raw= 23 → SNR=12 → angle+spatial= 7 pts
+Frame 46: raw= 29 → SNR=12 → angle+spatial= 4 pts
+Frame 47: raw= 26 → SNR=12 → angle+spatial= 6 pts
+Frame 48: raw= 25 → SNR=12 → angle+spatial= 1 pts
+Frame 49: raw= 21 → SNR=12 → angle+spatial= 5 pts
+Frame 50: raw= 21 → SNR=12 → angle+spatial= 4 pts
+Frame 51: raw= 24 → SNR=12 → angle+spatial= 7 pts
+Frame 52: raw= 26 → SNR=12 → angle+spatial= 5 pts
+Frame 53: raw= 21 → SNR=12 → angle+spatial= 4 pts
+Frame 54: raw= 27 → SNR=12 → angle+spatial= 6 pts
+Frame 55: raw= 25 → SNR=12 → angle+spatial= 5 pts
+
+========================================
+统计汇总:
+  总帧数: 21
+  CFAR原始检测总数: 413
+  SNR筛选后: 240
+  角度+空间筛选后: 98
+  最终点云: 98 点
+  X范围: [-2.50, 1.70] m
+  Y范围: [0.58, 2.97] m
+  Z范围: [0.12, 0.89] m
+  V范围: [-0.70, 0.87] m/s
+保存: CCdata_walk_0001_1_RD_CFAR.png
+保存: CCdata_walk_0001_2_3D_PointCloud.png
+保存: CCdata_walk_0001_3_XY_TopView.png
+保存: CCdata_walk_0001_4_XZ_SideView.png
+保存: CCdata_walk_0001_5_YZ_FrontView.png
+
+===== 完成 =====
