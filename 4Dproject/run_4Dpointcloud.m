@@ -13,7 +13,7 @@ clear; close all;
 %% ======================== 可调参数 ========================
 scenario     = 'CCdata_walk_0001';  % 场景名
 % 站立场景特殊参数
-is_static_scenario = contains(scenario, 'stand') || contains(scenario, 'sit') ...
+is_static_scenario = contains(scenario, 'jump') || contains(scenario, 'sit') ...
                      || contains(scenario, 'empty');
 if is_static_scenario
     frame_start = 10; frame_end = 12;   % 静态场景帧数少
